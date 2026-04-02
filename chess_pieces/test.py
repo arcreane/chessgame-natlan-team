@@ -13,4 +13,4 @@ class Position:
             p2 = Position("a", 1)
             print(f"Position created: {p2}") # Expected: a1
 
-            print("Tests Position OK!")
+            print("Tests Position OK!") 

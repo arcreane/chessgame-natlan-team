@@ -1,3 +1,7 @@
+class Piece:
+    pass
+
+
 class King(Piece):
     def is_valid_move(self, new_position, board):
 

@@ -1,7 +1,7 @@
 
 import json
 from typing import Optional, List, Type, Dict
-from position import Position
+from test_position_class import Position
 from pieces.base import Piece
 from pieces.king import King
 from pieces.queen import Queen
@@ -85,4 +85,4 @@ class Board:
         return b
 
     # test helpers (optional but useful)
-    def reset
+

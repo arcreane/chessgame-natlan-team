@@ -1,3 +1,6 @@
+from test_position_class import Position
+from board import Board
+
 class Knight:
     def __init__(self, color, position):
         self.color = color

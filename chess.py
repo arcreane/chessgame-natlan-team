@@ -10,8 +10,13 @@ class Chess:
         self.currentPlayer = None
 
     def initPlayers(self):
-        p1 = Player("Player1", 0)
-        p2 = Player("Player2", 1)
+        from AIPlayer import AIPlayer
+
+        name1 = input("Enter name for Player 1: ")
+        name2 = input("Enter name for Player 2: ")
+
+        p1 = AIPlayer(name1, 0) if name1 == "AI" else Player(name1, 0)
+        p2 = AIPlayer(name2, 1) if name2 == "AI" else Player(name2, 1)
 
         self.players = [p1, p2]
         self.currentPlayer = p1

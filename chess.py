@@ -71,8 +71,58 @@ class Chess:
     def askMove(self):
         return self.currentPlayer.askMove()
 
+    def isInCheck(self, color):
+        king = None
+        for piece in self.board.pieces:
+            if piece.__str__() == "K" and piece.color == color:
+                king = piece
+                break
+
+        if king is None:
+            return False
+
+        for piece in self.board.pieces:
+            if piece.color != color:
+                if piece.isValidMove(king.position, self.board):
+                    return True
+
+        return False
+
     def isCheckMate(self):
-        return False   # temporary
+        color = self.currentPlayer.color
+        columns = ["a", "b", "c", "d", "e", "f", "g", "h"]
+
+        if not self.isInCheck(color):
+            return False
+
+        for piece in self.board.pieces:
+            if piece.color != color:
+                continue
+
+            for col in columns:
+                for row in range(1, 9):
+                    newPos = Position(col, row)
+
+                    if not piece.isValidMove(newPos, self.board):
+                        continue
+
+                    originalPos = piece.position
+                    capturedPiece = self.board.getPiece(newPos)
+
+                    piece.position = newPos
+                    if capturedPiece is not None:
+                        self.board.pieces.remove(capturedPiece)
+
+                    stillInCheck = self.isInCheck(color)
+
+                    piece.position = originalPos
+                    if capturedPiece is not None:
+                        self.board.pieces.append(capturedPiece)
+
+                    if not stillInCheck:
+                        return False
+
+        return True
 
     def updateBoard(self, move):
         # move format: "e2 e4"

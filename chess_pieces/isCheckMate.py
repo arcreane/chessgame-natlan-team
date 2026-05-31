@@ -2,15 +2,17 @@ def isCheckMate(self):
 
     king = None
 
-    for piece in self. board.pieces:
+    # find current player's king
+    for piece in self.board.pieces:
         if isinstance(piece, King) and piece.color == self.currentPlayer.color:
-            King = piece
+            king = piece
             break
 
     if king is None:
         return False
 
-    for the piece in self. board.pieces:
+    # check if any enemy piece can attack king
+    for piece in self.board.pieces:
 
         if piece.color != king.color:
 

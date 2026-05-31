@@ -39,7 +39,34 @@ class Chess:
             print("    a  b  c  d  e  f  g  h\n")
 
     def isValidMove(self, move):
-        return True   # temporary
+       parts = move.split()
+        if len(parts) != 2:
+            return False
+
+        start = parts[0]
+        end = parts[1]
+
+        # validate format
+        if len(start) != 2 or len(end) != 2:
+            return False
+
+        startPos = Position(start[0], int(start[1]))
+        endPos = Position(end[0], int(end[1]))
+
+        # find the piece at start position
+        piece = self.board.getPiece(startPos)
+
+        if piece is None:
+            print("No piece at that position!")
+            return False
+
+        # check it belongs to current player
+        if piece.color != self.currentPlayer.color:
+            print("That's not your piece!")
+            return False
+
+        # call the piece's own isValidMove
+        return piece.isValidMove(endPos, self.board)
 
     def askMove(self):
         return self.currentPlayer.askMove()

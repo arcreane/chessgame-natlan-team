@@ -1,11 +1,22 @@
-class Piece:
-    pass
-
-
 class King(Piece):
-    def is_valid_move(self, new_position, board):
+    def __init__(self, position, color):
+        super().__init__(position, color)
 
-        dx = abs(new_position.row - self.position.row)
-        dy = abs(new_position.column - self.position.column)
+    def __str__(self):
+        return "K"
 
-        return dx <= 1 and dy <= 1 and not (dx == 0 and dy == 0)
+    def isValidMove(self, newPosition, board):
+        dx = abs(newPosition.row - self.position.row)
+        dy = abs(ord(newPosition.column) - ord(self.position.column))
+
+        if dx == 0 and dy == 0:
+            return False
+
+        if not (dx <= 1 and dy <= 1):
+            return False
+
+        target = board.getPiece(newPosition)
+        if target is not None and target.color == self.color:
+            return False
+
+        return True

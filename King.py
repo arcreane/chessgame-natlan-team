@@ -22,3 +22,5 @@ class King(Piece):
             return False
 
         return True
+    def __str__(self):
+        return "K" if self.color == 0 else "k"

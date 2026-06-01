@@ -42,3 +42,5 @@ class Queen(Piece):
             return False
 
         return True
+    def __str__(self):
+        return "Q" if self.color == 0 else "q"

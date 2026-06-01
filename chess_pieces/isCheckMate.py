@@ -1,24 +1,53 @@
-def isCheckMate(self):
+   def isInCheck(self, color):
+        king = None
+        for piece in self.board.pieces:
+            if piece.__str__() == "K" and piece.color == color:
+                king = piece
+                break
 
-    king = None
+        if king is None:
+            return False
 
-    # find current player's king
-    for piece in self. board.pieces:
-        if isinstance(piece, King) and piece.color == self.currentPlayer.color:
-            King = piece
-            break
-        print("CHECKMATE FUNCTION WORKING")
+        for piece in self.board.pieces:
+            if piece.color != color:
+                if piece.isValidMove(king.position, self.board):
+                    return True
 
-    if king is None:
         return False
 
-    # check if any enemy piece can attack the king
-    for the piece in the self. board.pieces:
+    def isCheckMate(self):
+        color = self.currentPlayer.color
+        columns = ["a", "b", "c", "d", "e", "f", "g", "h"]
 
-        if piece.color != king.color:
+        if not self.isInCheck(color):
+            return False
 
-            if piece.isValidMove(king.position, self.board):
-                return True
+        for piece in self.board.pieces:
+            if piece.color != color:
+                continue
 
-    return False
+            for col in columns:
+                for row in range(1, 9):
+                    newPos = Position(col, row)
+
+                    if not piece.isValidMove(newPos, self.board):
+                        continue
+
+                    originalPos = piece.position
+                    capturedPiece = self.board.getPiece(newPos)
+
+                    piece.position = newPos
+                    if capturedPiece is not None:
+                        self.board.pieces.remove(capturedPiece)
+
+                    stillInCheck = self.isInCheck(color)
+
+                    piece.position = originalPos
+                    if capturedPiece is not None:
+                        self.board.pieces.append(capturedPiece)
+
+                    if not stillInCheck:
+                        return False
+
+        return True
     

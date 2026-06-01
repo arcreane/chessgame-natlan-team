@@ -1,0 +1,20 @@
+from position import Position
+
+COLUMNS = ["a", "b", "c", "d", "e", "f", "g", "h"]
+
+
+def path_clear(board, start, end, dr, dc) -> bool:
+    r = start.row
+    c = COLUMNS.index(start.column)
+    er = end.row
+    ec = COLUMNS.index(end.column)
+    r += dr
+    c += dc
+    while (r, c) != (er, ec):
+        if not (0 <= c <= 7) or not (1 <= r <= 8):
+            return False
+        if board.getPiece(Position(COLUMNS[c], r)) is not None:
+            return False
+        r += dr
+        c += dc
+    return True

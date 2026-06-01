@@ -39,7 +39,7 @@ class Chess:
             print("    a  b  c  d  e  f  g  h\n")
 
     def isValidMove(self, move):
-       parts = move.split()
+        parts = move.split()
         if len(parts) != 2:
             return False
 
@@ -77,6 +77,10 @@ class Chess:
             if piece.__str__() == "K" and piece.color == color:
                 king = piece
                 break
+            if piece.__str__() == "k" and piece.color == color:
+                king = piece
+                break
+
 
         if king is None:
             return False
@@ -125,7 +129,6 @@ class Chess:
         return True
 
     def updateBoard(self, move):
-        # move format: "e2 e4"
         parts = move.split()
 
         if len(parts) != 2:
@@ -138,10 +141,14 @@ class Chess:
         endPos = Position(end[0], int(end[1]))
 
         piece = self.board.getPiece(startPos)
+        target = self.board.getPiece(endPos)
+
+        # Remove captured piece from board
+        if target is not None:
+            self.board.pieces.remove(target)
 
         if piece is not None:
             piece.position = endPos
-
     def switchPlayer(self):
         if self.currentPlayer == self.players[0]:
             self.currentPlayer = self.players[1]
@@ -151,8 +158,20 @@ class Chess:
     def play(self):
         self.initPlayers()
 
-        while not self.isCheckMate():
+        while True:
             self.displayBoard()
+
+            
+            kingFound = any(str(p) in ["K", "k"] and p.color == self.currentPlayer.color
+                            for p in self.board.pieces)
+            if not kingFound:
+                print(f"Game Over! {self.currentPlayer.name} lost!")
+                break
+
+
+            if self.isCheckMate():
+                print(f"Checkmate! {self.currentPlayer.name} lost!")
+                break
 
             move = self.askMove()
 

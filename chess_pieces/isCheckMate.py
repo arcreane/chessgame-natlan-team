@@ -1,14 +1,14 @@
    def isInCheck(self, color):
         king = None
-        for piece in self.board.pieces:
+        for piece in self. board.pieces:
             if piece.__str__() == "K" and piece.color == color:
-                king = piece
+                King = piece
                 break
 
         if king is None:
             return False
 
-        for piece in self.board.pieces:
+        for piece in self. board.pieces:
             if piece.color != color:
                 if piece.isValidMove(king.position, self.board):
                     return True
@@ -22,7 +22,7 @@
         if not self.isInCheck(color):
             return False
 
-        for piece in self.board.pieces:
+        for piece in self. board.pieces:
             if piece.color != color:
                 continue
 
@@ -30,20 +30,20 @@
                 for row in range(1, 9):
                     newPos = Position(col, row)
 
-                    if not piece.isValidMove(newPos, self.board):
+                    If not, piece.isValidMove(newPos, self.board):
                         continue
 
                     originalPos = piece.position
                     capturedPiece = self.board.getPiece(newPos)
 
                     piece.position = newPos
-                    if capturedPiece is not None:
+                    if capturedPiece is None:
                         self.board.pieces.remove(capturedPiece)
 
                     stillInCheck = self.isInCheck(color)
 
                     piece.position = originalPos
-                    if capturedPiece is not None:
+                    if capturedPiece is None:
                         self.board.pieces.append(capturedPiece)
 
                     if not stillInCheck:

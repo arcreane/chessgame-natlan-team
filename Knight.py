@@ -21,3 +21,5 @@ class Knight(Piece):
         if piece_at_destination is not None and piece_at_destination.color == self.color:
             return False
         return True
+    def __str__(self):
+        return "N" if self.color == 0 else "n"

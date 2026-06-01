@@ -6,7 +6,7 @@ class Pawn(Piece):
         super().__init__(position, color)
 
     def __str__(self):
-        return "P"
+        return "P" if self.color == 0 else "p"
 
     def isValidMove(self, newPosition, board):
         col = self.position.column
